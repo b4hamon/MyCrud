@@ -49,7 +49,8 @@ class VehicleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        return view('vehicles.edit', compact('vehicle'));
     }
 
     /**
@@ -57,7 +58,12 @@ class VehicleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        $vehicle = new Vehicle();
+        $vehicle->color = $request->color;
+        $vehicle->published_at = $request->published_at;
+        $vehicle->save();
+        return redirect()->route('vehicles.index');
     }
 
     /**
@@ -65,6 +71,8 @@ class VehicleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        $vehicle->delete();
+        return redirect()->route('vehicles.index');
     }
 }
